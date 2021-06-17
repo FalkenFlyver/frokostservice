@@ -22,7 +22,7 @@ app.message(async ({ message, say }) => {
 ParseTextAndAddEmoji = async (msg, ts) => {
   for (let i = 0; i < emojis.TEXT_AND_EMOJI_LIST.length; i++) {
     let emojiItem = emojis.TEXT_AND_EMOJI_LIST[i];
-    regexp = new RegExp(emojiItem[0]);
+    regexp = new RegExp(emojiItem[0], 'i');
     if (regexp.exec(msg) != null) {
       console.log('Found emoji: ', emojiItem[1], ' in text: ', msg);
       await app.client.reactions.add({
