@@ -27,8 +27,6 @@ exports.TEXT_AND_EMOJI_LIST = [
   ['invest', 'money_with_wings'],
   ['playstation', 'playstation'],
   ['ps4', 'playstation'],
-  ['clearpro', 'clearpro'],
-  ['cfh', 'cfh'],
   ['burger[^r]', 'hamburger'],
   ['aubergine', 'eggplant'],
   ['kalkun', 'turkey'],
@@ -109,5 +107,8 @@ exports.TEXT_AND_EMOJI_LIST = [
   ['rosé', 'champagne'],
   ['brut', 'champagne'],
   ['mousserende', 'champagne'],
-  ['champus', 'champagne']
+  ['champus', 'champagne'],
+  ['snaps', 'snaps'],
+  ['hospital', 'hospital'],
+  ['vaccine', 'syringe']
 ]
