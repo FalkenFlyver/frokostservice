@@ -2,22 +2,53 @@ const { App } = require('@slack/bolt')
 const emojis = require('./emojis.js')
 const https = require('https')
 const ssiparser = require('./ssiparser.js')
-// Initializes your app with your bot token and signing secret
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET
 })
-// Reverse all messages the app can hear
+function changeTimezone(date, ianatz) {
+  // suppose the date is 12:00 UTC
+  var invdate = new Date(
+    date.toLocaleString('en-US', {
+      timeZone: ianatz
+    })
+  )
+
+  // then invdate will be 07:00 in Toronto
+  // and the diff is 5 hours
+  var diff = date.getTime() - invdate.getTime()
+
+  // so 12:00 in Toronto is 17:00 UTC
+  return new Date(date.getTime() - diff) // needs to substract
+}
 app.message(async ({ message, say }) => {
   console.log('message', message)
 
-  if (message.text == '!coronatal') {
+  if (message.text && message.text.toLowerCase() == '!coronatal') {
     let coronaTalMessage = await ssiparser.getCoronaTalData()
     say(coronaTalMessage)
   } else {
     await ParseTextAndAddEmoji(message.text, message.ts)
   }
-  //await say(reversedText);
+  let realTs = changeTimezone(
+    new Date(message.ts * 1000),
+    'Europe/Copenhagen'
+  )
+  console.log(realTs, ':', message.text)
+  if (realTs.getHours() == 13 && realTs.getMinutes() == 37) {
+    await app.client.reactions.add({
+      channel: mainChannel,
+      name: 'l33t',
+      timestamp: ts
+    })
+  }
+  if (realTs.getHours() == 16 && realTs.getMinutes() == 20) {
+    await app.client.reactions.add({
+      channel: mainChannel,
+      name: 'weed',
+      timestamp: ts
+    })
+  }
 })
 ParseTextAndAddEmoji = async (msg, ts) => {
   for (let i = 0; i < emojis.TEXT_AND_EMOJI_LIST.length; i++) {
@@ -43,13 +74,10 @@ testMessage = () => {
 
 let mainChannel = ''
 ;(async () => {
-  // Start your app
   await app.start(process.env.PORT || 22051)
   var channels = await app.client.conversations.list()
   mainChannel = channels.channels.find((x) => {
     return x.name == 'flat-earth'
   }).id
-
-  //testMessage();
   console.log('⚡️ Bolt app is running!')
 })()
