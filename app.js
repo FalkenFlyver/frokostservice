@@ -16,7 +16,7 @@ function changeTimezone(date, ianatz) {
   return new Date(date.getTime() - diff)
 }
 app.message(async ({ message, say }) => {
-  console.log('message', message)
+  //console.log('message', message)
 
   if (message.text && message.text.toLowerCase() == '!coronatal') {
     let coronaTalMessage = await ssiparser.getCoronaTalData()
@@ -28,19 +28,19 @@ app.message(async ({ message, say }) => {
     new Date(message.ts * 1000),
     'Europe/Copenhagen'
   )
-  console.log(realTs, ':', message.text)
+  //console.log(realTs, ':>', message.text)
   if (realTs.getHours() == 13 && realTs.getMinutes() == 37) {
     await app.client.reactions.add({
       channel: mainChannel,
       name: 'l33t',
-      timestamp: ts
+      timestamp: message.ts
     })
   }
   if (realTs.getHours() == 16 && realTs.getMinutes() == 20) {
     await app.client.reactions.add({
       channel: mainChannel,
       name: 'weed',
-      timestamp: ts
+      timestamp: message.ts
     })
   }
 })
