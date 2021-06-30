@@ -96,6 +96,8 @@ exports.TEXT_AND_EMOJI_LIST = [
   ['rusland', 'flag-ru'],
   ['italiensk', 'flag-it'],
   ['gay', 'eggplant'],
+  ['gay', 'peach'],
+  ['gay', 'champagne'],
   ['fersken', 'peach'],
   ['(ikke.*teamseer)|(teamseer.*ikke)', 'triangular_flag_on_post'],
   [
